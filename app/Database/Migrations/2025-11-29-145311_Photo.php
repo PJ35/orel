@@ -28,7 +28,7 @@ class Photo extends Migration
             ],
         ]);
         $this->forge->addKey('id', true);
-        $this->forge->addForeignKey('article_id', 'aticle', 'id');
+        $this->forge->addForeignKey('article_id', 'article', 'id');
         $this->forge->createTable('photo');
     }
 

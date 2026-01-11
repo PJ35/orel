@@ -4,7 +4,7 @@ namespace App\Database\Migrations;
 
 use CodeIgniter\Database\Migration;
 
-class Aticle extends Migration
+class Article extends Migration
 {
     public function up()
     {
@@ -39,11 +39,11 @@ class Aticle extends Migration
         $this->forge->addKey('id', true);
         $this->forge->addForeignKey('user_id', 'users', 'id');
         $this->forge->addForeignKey('section_id', 'section', 'id');
-        $this->forge->createTable('aticle');
+        $this->forge->createTable('article');
     }
 
     public function down()
     {
-        $this->forge->dropTable('aticle');
+        $this->forge->dropTable('article');
     }
 }

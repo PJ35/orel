@@ -124,3 +124,9 @@ _modules/*
 
 /results/
 /phpunit*.xml
+
+#-------------------------
+# Local Files
+#-------------------------
+photos/*
+!photos/index.html

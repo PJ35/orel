@@ -12,7 +12,7 @@ class Photo extends Model
     protected $returnType       = 'object';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = [];
+    protected $allowedFields    = ['path', 'featured', 'article_id'];
 
     protected bool $allowEmptyInserts = false;
     protected bool $updateOnlyChanged = true;

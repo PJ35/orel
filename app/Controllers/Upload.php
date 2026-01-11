@@ -3,10 +3,16 @@
 namespace App\Controllers;
 
 use CodeIgniter\Files\File;
+use App\Models\Photo;
 
 class Upload extends BaseController
 {
     protected $helpers = ['form'];
+    protected $photo;
+
+    public function __construct(){
+        $this->photo = new Photo();
+    }
 
     public function index()
     {
@@ -36,7 +42,18 @@ class Upload extends BaseController
         $img = $this->request->getFile('userfile');
 
         if (! $img->hasMoved()) {
-            $filepath = WRITEPATH . 'uploads/' . $img->store();
+            $newName = $img->getRandomName();
+            $img->move(FCPATH . 'photos', $newName);
+            
+            $filepath = FCPATH . 'photos/' . $newName;
+
+            $insert = [
+                'path' => $newName,
+                'featured' => 0,
+                'article_id' => null,
+            ];
+
+            $this->photo->insert($insert);
 
             $data = ['uploaded_fileinfo' => new File($filepath)];
 
