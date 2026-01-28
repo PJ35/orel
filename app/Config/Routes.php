@@ -11,8 +11,10 @@ $routes->get('/events', 'Events::index');
 $routes->get('/events/(:segment)', 'Events::view/$1');
 $routes->get('/contact', 'Homepage::contact');
 $routes->get('/photos', 'Photo::index');
-$routes->get('upload', 'Upload::index');          // Add this line.
-$routes->post('upload/upload', 'Upload::upload'); // Add this line.
+$routes->get('upload', 'Upload::index');
+$routes->post('upload/upload', 'Upload::upload');
+$routes->get('/article/create', 'Article::create');
+$routes->post('/article/store', 'Article::store');
 // Alias so `/login` works with the App controller
 $routes->get('/login', 'Auth::login');
 $routes->group('auth', ['namespace' => 'IonAuth\Controllers'], function ($routes) {
