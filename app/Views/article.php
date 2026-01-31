@@ -4,4 +4,5 @@
 <div>
     <?= $article->text ?>
 </div>
+<a href="<?= base_url('article/edit/' . $article->id) ?>">Edit</a>
 <?= $this->endSection() ?>

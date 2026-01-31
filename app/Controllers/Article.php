@@ -43,15 +43,33 @@ class Article extends BaseController
 
     public function store()
     {
-        $title = $this->request->getPost('title');
-        $content = $this->request->getPost('content');
-
         $data = [
-            'title' => $title,
-            'text' => $content,
+            'title' => $this->request->getPost('title'),
+            'text' => $this->request->getPost('content'),
             'user_id' => session()->get('user_id') ?? 1,
         ];
         $this->article->insert($data);
-        return redirect()->to('/article/create')->with('success', 'Article created successfully.');
+        return redirect()->to('article/create')->with('success', 'Article created successfully.');
+    }
+
+    public function edit($id)
+    {
+        $data = [
+            'article' => $this->article->find($id),
+        ];
+        if (!$data['article']) {
+            throw new \CodeIgniter\Exceptions\PageNotFoundException('Article not found');
+        }
+        return view('article/edit', $data);
+    }
+
+    public function update($id)
+    {
+        $data = [
+            'title' => $this->request->getPost('title'),
+            'text' => $this->request->getPost('content'),
+        ];
+        $this->article->update($id, $data);
+        return redirect()->to('articles')->with('success', 'Article updated successfully.');
     }
 }
