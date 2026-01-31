@@ -6,17 +6,18 @@ use CodeIgniter\Router\RouteCollection;
  * @var RouteCollection $routes
  */
 $routes->get('/', 'Homepage::index');
-$routes->get('/about', 'Homepage::about');
-$routes->get('/events', 'Events::index');
-$routes->get('/events/(:segment)', 'Events::view/$1');
-$routes->get('/contact', 'Homepage::contact');
-$routes->get('/photos', 'Photo::index');
+$routes->get('about', 'Homepage::about');
+$routes->get('events', 'Events::index');
+$routes->get('events/(:segment)', 'Events::view/$1');
+$routes->get('contact', 'Homepage::contact');
+$routes->get('photos', 'Photo::index');
 $routes->get('upload', 'Upload::index');
 $routes->post('upload/upload', 'Upload::upload');
-$routes->get('/article/create', 'Article::create');
-$routes->post('/article/store', 'Article::store');
-// Alias so `/login` works with the App controller
-$routes->get('/login', 'Auth::login');
+$routes->get('articles', 'Article::index');
+$routes->get('article/(:num)', 'Article::show/$1');
+$routes->get('article/create', 'Article::create');
+$routes->post('article/store', 'Article::store');
+$routes->get('login', 'Auth::login');
 $routes->group('auth', ['namespace' => 'IonAuth\Controllers'], function ($routes) {
 	$routes->add('login', 'Auth::login');
 	$routes->get('logout', 'Auth::logout');

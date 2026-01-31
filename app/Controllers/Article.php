@@ -18,7 +18,22 @@ class Article extends BaseController
 
     public function index()
     {
-        //
+        $data = [
+            'articles' => $this->article->paginate(5),//5 for testing, 10 for production
+            'pager' => $this->article->pager,
+        ];
+        return view('articles', $data);
+    }
+
+    public function show($id)
+    {
+        $data = [
+            'article' => $this->article->find($id),
+        ];
+        if (!$data['article']) {
+            throw new \CodeIgniter\Exceptions\PageNotFoundException('Article not found');
+        }
+        return view('article', $data);
     }
 
     public function create()
@@ -32,7 +47,7 @@ class Article extends BaseController
         $content = $this->request->getPost('content');
 
         $data = [
-            'title'   => $title,
+            'title' => $title,
             'text' => $content,
             'user_id' => session()->get('user_id') ?? 1,
         ];
