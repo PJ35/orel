@@ -21,6 +21,9 @@
                 <li class="nav-item">
                     <a class="nav-link" href="<?= base_url('article/create') ?>">Create Article</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="<?= base_url('contact') ?>">Contact</a>
+                </li>
                 <?php if (session()->has('identity')): ?>
                     <li class="nav-item">
                         <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true"><?= esc(session()->get('identity')) ?></a>

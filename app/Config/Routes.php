@@ -9,7 +9,7 @@ $routes->get('/', 'Homepage::index');
 $routes->get('about', 'Homepage::about');
 $routes->get('events', 'Events::index');
 $routes->get('events/(:segment)', 'Events::view/$1');
-$routes->get('contact', 'Homepage::contact');
+$routes->get('contact', 'Contact::index');
 $routes->get('photos', 'Photo::index');
 $routes->get('upload', 'Upload::index');
 $routes->post('upload/upload', 'Upload::upload');
