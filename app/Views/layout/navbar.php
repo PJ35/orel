@@ -5,31 +5,39 @@
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav ms-auto">
+            <ul class="navbar-nav">
                 <li class="nav-item">
                     <a class="nav-link" href="<?= base_url('/') ?>">Home</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="<?= base_url('photos') ?>">Photos</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="<?= base_url('upload') ?>">Upload</a>
-                </li>
+                <?php if (session()->has('identity')): ?>
+                    <li class="nav-item">
+                        <a class="nav-link" href="<?= base_url('upload') ?>">Upload</a>
+                    </li>
+                <?php endif; ?>
                 <li class="nav-item">
                     <a class="nav-link" href="<?= base_url('articles') ?>">Articles</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="<?= base_url('article/create') ?>">Create Article</a>
-                </li>
+                <?php if (session()->has('identity')): ?>
+                    <li class="nav-item">
+                        <a class="nav-link" href="<?= base_url('article/create') ?>">Create Article</a>
+                    </li>
+                <?php endif; ?>
                 <li class="nav-item">
                     <a class="nav-link" href="<?= base_url('contact') ?>">Contact</a>
                 </li>
+            </ul>
+            <ul class="navbar-nav ms-auto">
                 <?php if (session()->has('identity')): ?>
-                    <li class="nav-item">
-                        <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true"><?= esc(session()->get('identity')) ?></a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="<?= base_url('auth/logout') ?>">Logout</a>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <?= session()->get('identity') ?>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="<?= base_url('auth/logout') ?>">Logout</a></li>
+                        </ul>
                     </li>
                 <?php else: ?>
                     <li class="nav-item">
