@@ -37,6 +37,10 @@
                         </a>
                         <ul class="dropdown-menu">
                             <li><a class="dropdown-item" href="<?= base_url('auth/logout') ?>">Logout</a></li>
+                            <?php if (service('ion_auth')->isAdmin()): ?>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" href="<?= base_url('section/create') ?>">Create Section</a></li>
+                            <?php endif; ?>
                         </ul>
                     </li>
                 <?php else: ?>

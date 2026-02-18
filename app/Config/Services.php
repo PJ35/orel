@@ -19,6 +19,15 @@ use CodeIgniter\Config\BaseService;
  */
 class Services extends BaseService
 {
+    public static function ion_auth($getShared = true)
+    {
+        if ($getShared) {
+            return static::getSharedInstance('ion_auth');
+        }
+
+        return new \IonAuth\Libraries\IonAuth();
+    }
+
     /*
      * public static function example($getShared = true)
      * {

@@ -19,6 +19,9 @@ $routes->get('article/create', 'Article::create');
 $routes->post('article/store', 'Article::store');
 $routes->get('article/edit/(:num)', 'Article::edit/$1');
 $routes->post('article/update/(:num)', 'Article::update/$1');
+$routes->get('section', 'Section::index');
+$routes->get('section/create', 'Section::create');
+$routes->post('section/store', 'Section::store');
 $routes->get('login', 'Auth::login');
 $routes->group('auth', ['namespace' => 'IonAuth\Controllers'], function ($routes) {
 	$routes->add('login', 'Auth::login');
