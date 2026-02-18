@@ -18,12 +18,21 @@ class Section extends BaseController
 
     public function index()
     {
-        //
+        $data = [
+            'sections' => $this->section->findAll(),
+        ];
+        return view('sections', $data);
     }
 
     public function show($id)
     {
-        //
+        $data = [
+            'section' => $this->section->find($id),
+        ];
+        if (!$data['section']) {
+            throw new \CodeIgniter\Exceptions\PageNotFoundException('Section not found');
+        }
+        return view('section', $data);
     }
 
     public function create()
