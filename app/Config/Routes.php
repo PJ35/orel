@@ -23,6 +23,8 @@ $routes->get('sections', 'Section::index');
 $routes->get('section/(:num)', 'Section::show/$1');
 $routes->get('section/create', 'Section::create');
 $routes->post('section/store', 'Section::store');
+$routes->get('section/edit/(:num)', 'Section::edit/$1');
+$routes->post('section/update/(:num)', 'Section::update/$1');
 $routes->get('login', 'Auth::login');
 $routes->group('auth', ['namespace' => 'IonAuth\Controllers'], function ($routes) {
 	$routes->add('login', 'Auth::login');

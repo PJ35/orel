@@ -50,4 +50,25 @@ class Section extends BaseController
         $this->section->insert($data);
         return redirect()->to('section/create')->with('success', 'Section created successfully.');
     }
+
+    public function edit($id)
+    {
+        $data = [
+            'section' => $this->section->find($id),
+        ];
+        if (!$data['section']) {
+            throw new \CodeIgniter\Exceptions\PageNotFoundException('Section not found');
+        }
+        return view('section/edit', $data);
+    }
+
+    public function update($id)
+    {
+        $data = [
+            'name' => $this->request->getPost('name'),
+            'description' => $this->request->getPost('description'),
+        ];
+        $this->section->update($id, $data);
+        return redirect()->to('sections')->with('success', 'Section updated successfully.');
+    }
 }

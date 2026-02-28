@@ -1,0 +1,15 @@
+<?= $this->extend('layout/template'); ?>
+<?= $this->section('content'); ?>
+<h1>Edit Section</h1>
+<form action="<?= base_url('/section/update/' . $section->id) ?>" method="post">
+    <div class="mb-3">
+        <label for="name" class="form-label">Section Name</label>
+        <input type="text" class="form-control" id="name" name="name" value="<?= $section->name ?>" required>
+    </div>
+    <div class="mb-3">
+        <label for="description" class="form-label">Description</label>
+        <textarea class="form-control" id="description" name="description" rows="3"><?= $section->description ?></textarea>
+    </div>
+    <button type="submit" class="btn btn-primary">Update</button>
+</form>
+<?= $this->endSection() ?>
