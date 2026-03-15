@@ -10,11 +10,11 @@
                     <a class="nav-link" href="<?= base_url('/') ?>">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="<?= base_url('photos') ?>">Photos</a>
+                    <a class="nav-link" href="<?= base_url('gallery') ?>">Photos</a>
                 </li>
                 <?php if (session()->has('identity')): ?>
                     <li class="nav-item">
-                        <a class="nav-link" href="<?= base_url('upload') ?>">Upload</a>
+                        <a class="nav-link" href="<?= base_url('photo/upload') ?>">Upload</a>
                     </li>
                 <?php endif; ?>
                 <li class="nav-item">

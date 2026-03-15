@@ -43,4 +43,12 @@ class Photo extends Model
     protected $afterFind      = [];
     protected $beforeDelete   = [];
     protected $afterDelete    = [];
+
+
+    public function getRandomPhotosByArticle()
+    {
+        $rankedSubquery = $this->db->table($this->table . ' p')->select('p.id, p.path, p.featured, p.article_id')->select('ROW_NUMBER() OVER (PARTITION BY p.article_id ORDER BY RAND()) AS rn', false)->getCompiledSelect();
+        $query = $this->db->query('SELECT ranked.id, ranked.path, ranked.featured, ranked.article_id ' . 'FROM (' . $rankedSubquery . ') ranked ' . 'WHERE ranked.rn = 1 ' . 'ORDER BY ranked.article_id ASC');
+        return $query->getResult();
+    }
 }

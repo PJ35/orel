@@ -5,21 +5,28 @@ namespace App\Controllers;
 use App\Controllers\BaseController;
 use CodeIgniter\HTTP\ResponseInterface;
 use App\Models\Article as ArticleModel;
+use App\Models\Photo as PhotoModel;
 
 class Article extends BaseController
 {
     protected $helpers = ['form'];
     protected $article;
+    protected $photo;
 
     public function __construct()
     {
         $this->article = new ArticleModel();
+        $this->photo = new PhotoModel();
     }
 
     public function index()
     {
+        $articles = $this->article->paginate(5);//5 for testing, 10 for production
+        foreach ($articles as $article) {
+            $article->featured_photo = $this->photo->where('article_id', $article->id)->where('featured', 1)->first();
+        }
         $data = [
-            'articles' => $this->article->paginate(5),//5 for testing, 10 for production
+            'articles' => $articles,
             'pager' => $this->article->pager,
         ];
         return view('articles', $data);
@@ -27,12 +34,14 @@ class Article extends BaseController
 
     public function show($id)
     {
-        $data = [
-            'article' => $this->article->find($id),
-        ];
-        if (!$data['article']) {
+        $article = $this->article->find($id);
+        if (!$article) {
             throw new \CodeIgniter\Exceptions\PageNotFoundException('Article not found');
         }
+        $data = [
+            'article' => $article,
+            'photos' => $this->photo->where('article_id', $id)->findAll(),
+        ];
         return view('article', $data);
     }
 
