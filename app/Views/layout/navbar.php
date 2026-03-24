@@ -12,7 +12,7 @@
                 <li class="nav-item">
                     <a class="nav-link" href="<?= base_url('gallery') ?>">Photos</a>
                 </li>
-                <?php if (session()->has('identity')): ?>
+                <?php if (session()->has('identity') && service('ion_auth')->isAdmin()): ?>
                     <li class="nav-item">
                         <a class="nav-link" href="<?= base_url('photo/upload') ?>">Upload</a>
                     </li>
@@ -20,7 +20,7 @@
                 <li class="nav-item">
                     <a class="nav-link" href="<?= base_url('articles') ?>">Articles</a>
                 </li>
-                <?php if (session()->has('identity')): ?>
+                <?php if (session()->has('identity') && service('ion_auth')->isAdmin()): ?>
                     <li class="nav-item">
                         <a class="nav-link" href="<?= base_url('article/create') ?>">Create Article</a>
                     </li>
@@ -28,6 +28,11 @@
                 <li class="nav-item">
                     <a class="nav-link" href="<?= base_url('sections') ?>">Sections</a>
                 </li>
+                <?php if (session()->has('identity') && service('ion_auth')->isAdmin()): ?>
+                    <li class="nav-item">
+                        <a class="nav-link" href="<?= base_url('section/create') ?>">Create Section</a>
+                    </li>
+                <?php endif; ?>
                 <li class="nav-item">
                     <a class="nav-link" href="<?= base_url('contact') ?>">Contact</a>
                 </li>
@@ -42,7 +47,8 @@
                             <li><a class="dropdown-item" href="<?= base_url('auth/logout') ?>">Logout</a></li>
                             <?php if (service('ion_auth')->isAdmin()): ?>
                                 <li><hr class="dropdown-divider"></li>
-                                <li><a class="dropdown-item" href="<?= base_url('section/create') ?>">Create Section</a></li>
+                                <li><a class="dropdown-item" href="<?= base_url('auth') ?>">Users</a></li>
+                                <li><a class="dropdown-item" href="<?= base_url('auth/create_user') ?>">Create User</a></li>
                             <?php endif; ?>
                         </ul>
                     </li>
