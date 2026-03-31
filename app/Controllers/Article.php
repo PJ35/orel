@@ -21,7 +21,7 @@ class Article extends BaseController
 
     public function index()
     {
-        $articles = $this->article->paginate(5);//5 for testing, 10 for production
+        $articles = $this->article->paginate(10);
         foreach ($articles as $article) {
             $article->featured_photo = $this->photo->where('article_id', $article->id)->where('featured', 1)->first();
         }
