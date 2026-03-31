@@ -2,10 +2,10 @@
 <?= $this->section('content') ?>
 <div class="mb-3">
     <a href="<?= base_url('photos/' . $article->id) ?>" class="btn btn-secondary">
-        <i class="bi bi-arrow-left"></i> Back to Photos
+        <i class="bi bi-arrow-left"></i> Zpět na fotky
     </a>
     <a href="<?= base_url('article/' . $article->id) ?>" class="btn btn-secondary">
-        <i class="bi bi-file-text"></i> View Article
+        <i class="bi bi-file-text"></i> Zobrazit článek
     </a>
 </div>
 <h2><?= $article->title ?></h2>

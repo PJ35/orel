@@ -20,17 +20,17 @@
     });
 </script>
 <div class="container mt-5">
-    <h1>Edit Article</h1>
+    <h1>Upravit článek</h1>
     <form action="<?= base_url('/article/update/' . $article->id) ?>" method="post">
         <div class="mb-3">
-            <label for="title" class="form-label">Title</label>
+            <label for="title" class="form-label">Nadpis</label>
             <input type="text" class="form-control" id="title" name="title" value="<?= $article->title ?>" required>
         </div>
         <div class="mb-3">
-            <label for="content" class="form-label">Content</label>
+            <label for="content" class="form-label">Obsah</label>
             <textarea class="form-control" id="content" name="content" rows="10"><?= $article->text ?></textarea>
         </div>
-        <button type="submit" class="btn btn-primary">Update</button>
+        <button type="submit" class="btn btn-primary">Aktualizovat</button>
     </form>
 </div>
 <script>
@@ -38,7 +38,7 @@
         const content = tinymce.get('content').getContent();
         if (!content.trim()) {
             e.preventDefault();
-            alert('Content is required');
+            alert('Obsah je povinný');
             return false;
         }
     });

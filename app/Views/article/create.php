@@ -19,24 +19,24 @@
         content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }'*/
     });
 </script>
-<h1>Create New Article</h1>
+<h1>Vytvořit nový článek</h1>
 <form action="<?= base_url('/article/store') ?>" method="post">
     <div class="mb-3">
-        <label for="title" class="form-label">Title</label>
+        <label for="title" class="form-label">Nadpis</label>
         <input type="text" class="form-control" id="title" name="title" required>
     </div>
     <div class="mb-3">
-        <label for="content" class="form-label">Content</label>
+        <label for="content" class="form-label">Obsah</label>
         <textarea class="form-control" id="content" name="content" rows="10"></textarea>
     </div>
-    <button type="submit" class="btn btn-primary">Submit</button>
+    <button type="submit" class="btn btn-primary">Uložit</button>
 </form>
 <script>
     document.querySelector('form').addEventListener('submit', function(e) {
         const content = tinymce.get('content').getContent();
         if (!content.trim()) {
             e.preventDefault();
-            alert('Content is required');
+            alert('Obsah je povinný');
             return false;
         }
     });

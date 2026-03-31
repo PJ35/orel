@@ -1,19 +1,19 @@
 <?= $this->extend('layout/template') ?>
 <?= $this->section('content') ?>
-<h1>Photo Gallery</h1>
-<p class="lead">Explore photos from our articles - click any photo to see all photos from that article</p>
+<h1>Fotogalerie</h1>
+<p class="lead">Prohlédněte si fotky z našich článků - klikněte na libovolnou fotku a uvidíte všechny fotky z daného článku</p>
 <?php if (!empty($photos)): ?>
     <div class="row">
         <?php foreach ($photos as $photo): ?>
             <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
                 <div class="card h-100 shadow-sm">
                     <a href="<?= base_url('photos/' . $photo->article_id) ?>" class="text-decoration-none">
-                        <img src="<?= base_url('photos/' . $photo->path) ?>" alt="<?= isset($photo->article) ? $photo->article->title : 'Photo' ?>" class="card-img-top" style="height: 200px; object-fit: cover;">
+                        <img src="<?= base_url('photos/' . $photo->path) ?>" alt="<?= isset($photo->article) ? $photo->article->title : 'Fotka' ?>" class="card-img-top" style="height: 200px; object-fit: cover;">
                         <div class="card-body">
                             <?php if (isset($photo->article)): ?>
                                 <h6 class="card-title text-dark"><?= $photo->article->title ?></h6>
                                 <p class="card-text text-muted small">
-                                    <i class="bi bi-images"></i> View all photos
+                                    <i class="bi bi-images"></i> Zobrazit všechny fotky
                                 </p>
                             <?php endif; ?>
                         </div>
@@ -24,7 +24,7 @@
     </div>
 <?php else: ?>
     <div class="alert alert-info">
-        <p>No photos available in the gallery yet.</p>
+        <p>V galerii zatím nejsou žádné fotky.</p>
     </div>
 <?php endif; ?>
 <?= $this->endSection() ?>

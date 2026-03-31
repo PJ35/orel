@@ -1,14 +1,14 @@
 <?= $this->extend('layout/template') ?>
 <?= $this->section('content') ?>
 
-<h3>Your file was successfully uploaded!</h3>
+<h3>Fotka byla úspěšně nahrána.</h3>
 
 <ul>
-    <li>name: <?= esc($uploaded_fileinfo->getBasename()) ?></li>
-    <li>size: <?= esc($uploaded_fileinfo->getSizeByUnit('kb')) ?> KB</li>
-    <li>extension: <?= esc($uploaded_fileinfo->guessExtension()) ?></li>
+    <li>název: <?= esc($uploaded_fileinfo->getBasename()) ?></li>
+    <li>velikost: <?= esc($uploaded_fileinfo->getSizeByUnit('kb')) ?> KB</li>
+    <li>přípona: <?= esc($uploaded_fileinfo->guessExtension()) ?></li>
 </ul>
 
-<p><?= anchor('upload', 'Upload Another File!') ?></p>
+<p><?= anchor('photo/upload', 'Nahrát další fotku') ?></p>
 
 <?= $this->endSection() ?>

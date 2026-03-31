@@ -1,6 +1,6 @@
 <?= $this->extend('layout/template') ?>
 <?= $this->section('content') ?>
-<h1>Sections</h1>
+<h1>Oddíly</h1>
 <ul class="list-group">
     <?php foreach ($sections as $section): ?>
         <li class="list-group-item">

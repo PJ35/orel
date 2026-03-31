@@ -1,6 +1,6 @@
 <?= $this->extend('layout/template') ?>
 <?= $this->section('content') ?>
-<h1>Articles</h1>
+<h1>Články</h1>
 <?php if (! empty($articles) && is_array($articles)): ?>
     <ul class="list-group">
         <?php foreach ($articles as $article): ?>
@@ -25,6 +25,6 @@
     </ul>
     <?= $pager->links() ?>
 <?php else: ?>
-    <p>No articles found.</p>
+    <p>Žádné články nebyly nalezeny.</p>
 <?php endif; ?>
 <?= $this->endSection() ?>

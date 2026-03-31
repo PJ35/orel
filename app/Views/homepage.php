@@ -1,7 +1,7 @@
 <?= $this->extend('layout/template') ?>
 <?= $this->section('content') ?>
-<h1>Lorem ipsum</h1>
-<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ab molestiae nisi, sapiente, pariatur fugiat provident eius ipsa doloribus voluptatum tempora reiciendis delectus quam sequi saepe praesentium hic esse iusto sunt?</p>
+<h1>Vítejte na stránkách jednoty Orel Staré Město</h1>
+<p>Najdete zde aktuální články, fotogalerii z akcí a důležité kontakty.</p>
 <?php if (! empty($photos) && is_array($photos)): ?>
     <!-- Carousel -->
     <div id="demo" class="carousel slide" data-bs-ride="carousel">
@@ -17,7 +17,7 @@
         <div class="carousel-inner">
             <?php foreach ($photos as $index => $photo): ?>
                 <div class="carousel-item <?php if ($index === 0) echo 'active'; ?>">
-                    <img src="<?= base_url('photos/' . $photo->path) ?>" class="d-block w-100" alt="Image <?= $index + 1 ?>">
+                    <img src="<?= base_url('photos/' . $photo->path) ?>" class="d-block w-100" alt="Obrázek <?= $index + 1 ?>">
                 </div>
             <?php endforeach; ?>
         </div>

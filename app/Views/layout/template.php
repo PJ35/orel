@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="cs">
     <head>
         <?= $this->include('layout/assets') ?>
     </head>
