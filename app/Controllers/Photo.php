@@ -6,16 +6,19 @@ use App\Controllers\BaseController;
 use CodeIgniter\HTTP\ResponseInterface;
 use App\Models\Photo as PhotoModel;
 use App\Models\Article as ArticleModel;
+use IonAuth\Libraries\IonAuth;
 
 class Photo extends BaseController
 {
     protected $photo;
     protected $article;
+    protected $ionAuth;
 
     public function __construct()
     {
         $this->photo = new PhotoModel();
         $this->article = new ArticleModel();
+        $this->ionAuth = new IonAuth();
     }
 
     public function index()
@@ -63,11 +66,19 @@ class Photo extends BaseController
 
     public function upload()
     {
+        if (!$this->ionAuth->loggedIn() || !$this->ionAuth->isAdmin()) {
+            return redirect()->to('/auth/login')->with('error', 'Přístup odepřen');
+        }
+        
         return view('upload_form', ['errors' => []]);
     }
 
     public function store()
     {
+        if (!$this->ionAuth->loggedIn() || !$this->ionAuth->isAdmin()) {
+            return redirect()->to('/auth/login')->with('error', 'Přístup odepřen');
+        }
+        
         $validationRule = [
             'userfile' => [
                 'label' => 'Image File',

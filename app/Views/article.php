@@ -4,14 +4,16 @@
 
 <?php if (!empty($photos) && count($photos) > 0): ?>
     <div class="mb-3">
-        <a href="<?= base_url('photos/' . $article->id) ?>" class="btn btn-primary">
-            <i class="bi bi-images"></i> Zobrazit fotky (<?= count($photos) ?>)
-        </a>
+        <a href="<?= base_url('photos/' . $article->id) ?>" class="btn btn-primary">Zobrazit fotky (<?= count($photos) ?>)</a>
     </div>
 <?php endif; ?>
 
 <div>
     <?= $article->text ?>
 </div>
-<a href="<?= base_url('article/edit/' . $article->id) ?>">Upravit</a>
+<?php if (session()->has('identity') && service('ion_auth')->isAdmin()): ?>
+    <div class="mt-3">
+        <a href="<?= base_url('article/edit/' . $article->id) ?>" class="btn btn-primary">Upravit</a>
+    </div>
+<?php endif; ?>
 <?= $this->endSection() ?>

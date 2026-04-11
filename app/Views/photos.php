@@ -1,12 +1,8 @@
 <?= $this->extend('layout/template') ?>
 <?= $this->section('content') ?>
 <div class="mb-3">
-    <a href="<?= base_url('gallery') ?>" class="btn btn-secondary">
-        <i class="bi bi-arrow-left"></i> Zpět do galerie
-    </a>
-    <a href="<?= base_url('article/' . $article->id) ?>" class="btn btn-secondary">
-        <i class="bi bi-file-text"></i> Zobrazit článek
-    </a>
+    <a href="<?= base_url('gallery') ?>" class="btn btn-secondary">Zpět do galerie</a>
+    <a href="<?= base_url('article/' . $article->id) ?>" class="btn btn-secondary">Zobrazit článek</a>
 </div>
 <h1>Fotky: <?= $article->title ?></h1>
 <?php if (!empty($photos)): ?>

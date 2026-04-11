@@ -12,9 +12,7 @@
                         <div class="card-body">
                             <?php if (isset($photo->article)): ?>
                                 <h6 class="card-title text-dark"><?= $photo->article->title ?></h6>
-                                <p class="card-text text-muted small">
-                                    <i class="bi bi-images"></i> Zobrazit všechny fotky
-                                </p>
+                                <p class="card-text text-muted small">Zobrazit všechny fotky</p>
                             <?php endif; ?>
                         </div>
                     </a>

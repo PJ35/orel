@@ -1,0 +1,44 @@
+<?php
+
+namespace App\Filters;
+
+use CodeIgniter\Filters\FilterInterface;
+use CodeIgniter\HTTP\RequestInterface;
+use CodeIgniter\HTTP\ResponseInterface;
+use IonAuth\Libraries\IonAuth;
+
+class AdminFilter implements FilterInterface
+{
+    /**
+     * Do whatever processing this filter needs to do.
+     * By default, it should not alter the request or response.
+     *
+     * @param RequestInterface $request
+     * @param array|null       $arguments
+     *
+     * @return RequestInterface|ResponseInterface|string|void
+     */
+    public function before(RequestInterface $request, $arguments = null)
+    {
+        $ionAuth = new IonAuth();
+        
+        if (!$ionAuth->loggedIn() || !$ionAuth->isAdmin()) {
+            return redirect()->to('/auth/login')->with('error', lang('Auth.access_denied_heading'));
+        }
+    }
+
+    /**
+     * Allows After filters to inspect and modify the response
+     * object as needed. This method does not need to do anything
+     * and can be left empty.
+     *
+     * @param RequestInterface  $request
+     * @param ResponseInterface $response
+     * @param array|null        $arguments
+     *
+     * @return void
+     */
+    public function after(RequestInterface $request, ResponseInterface $response, $arguments = null)
+    {
+    }
+}

@@ -6,17 +6,20 @@ use App\Controllers\BaseController;
 use CodeIgniter\HTTP\ResponseInterface;
 use App\Models\Article as ArticleModel;
 use App\Models\Photo as PhotoModel;
+use IonAuth\Libraries\IonAuth;
 
 class Article extends BaseController
 {
     protected $helpers = ['form'];
     protected $article;
     protected $photo;
+    protected $ionAuth;
 
     public function __construct()
     {
         $this->article = new ArticleModel();
         $this->photo = new PhotoModel();
+        $this->ionAuth = new IonAuth();
     }
 
     public function index()
@@ -47,38 +50,53 @@ class Article extends BaseController
 
     public function create()
     {
+        if (!$this->ionAuth->loggedIn() || !$this->ionAuth->isAdmin()) {
+            return redirect()->to('/auth/login')->with('error', 'Přístup odepřen');
+        }
         return view('article/create');
     }
 
     public function store()
     {
+        if (!$this->ionAuth->loggedIn() || !$this->ionAuth->isAdmin()) {
+            return redirect()->to('/auth/login')->with('error', 'Přístup odepřen');
+        }
+        
         $data = [
             'title' => $this->request->getPost('title'),
             'text' => $this->request->getPost('content'),
-            'user_id' => session()->get('user_id') ?? 1,
+            'user_id' => $this->ionAuth->user()->row()->id,
         ];
         $this->article->insert($data);
-        return redirect()->to('article/create')->with('success', 'Article created successfully.');
+        return redirect()->to('articles')->with('success', 'Článek byl úspěšně vytvořen.');
     }
 
     public function edit($id)
     {
+        if (!$this->ionAuth->loggedIn() || !$this->ionAuth->isAdmin()) {
+            return redirect()->to('/auth/login')->with('error', 'Přístup odepřen');
+        }
+        
         $data = [
             'article' => $this->article->find($id),
         ];
         if (!$data['article']) {
-            throw new \CodeIgniter\Exceptions\PageNotFoundException('Article not found');
+            throw new \CodeIgniter\Exceptions\PageNotFoundException('Článek nenalezen');
         }
         return view('article/edit', $data);
     }
 
     public function update($id)
     {
+        if (!$this->ionAuth->loggedIn() || !$this->ionAuth->isAdmin()) {
+            return redirect()->to('/auth/login')->with('error', 'Přístup odepřen');
+        }
+        
         $data = [
             'title' => $this->request->getPost('title'),
             'text' => $this->request->getPost('content'),
         ];
         $this->article->update($id, $data);
-        return redirect()->to('articles')->with('success', 'Article updated successfully.');
+        return redirect()->to('articles')->with('success', 'Článek byl úspěšně aktualizován.');
     }
 }

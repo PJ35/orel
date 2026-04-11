@@ -18,6 +18,9 @@
                     <?php endif; ?>
                             <h5><a href="article/<?= $article->id ?>"><?= $article->title ?></a></h5>
                             <p><?= substr(strip_tags($article->text), 0, 100) ?>...</p>
+                            <?php if (session()->has('identity') && service('ion_auth')->isAdmin()): ?>
+                                <a href="<?= base_url('article/edit/' . $article->id) ?>" class="btn btn-sm btn-primary">Upravit</a>
+                            <?php endif; ?>
                         </div>
                 </div>
             </li>
