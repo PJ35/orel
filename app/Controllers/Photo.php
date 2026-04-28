@@ -4,6 +4,7 @@ namespace App\Controllers;
 
 use App\Controllers\BaseController;
 use CodeIgniter\HTTP\ResponseInterface;
+use CodeIgniter\Files\File;
 use App\Models\Photo as PhotoModel;
 use App\Models\Article as ArticleModel;
 use IonAuth\Libraries\IonAuth;
@@ -70,7 +71,10 @@ class Photo extends BaseController
             return redirect()->to('/auth/login')->with('error', 'Přístup odepřen');
         }
         
-        return view('upload_form', ['errors' => []]);
+        return view('upload_form', [
+            'errors' => [],
+            'articles' => $this->article->findAll(),
+        ]);
     }
 
     public function store()
@@ -80,6 +84,14 @@ class Photo extends BaseController
         }
         
         $validationRule = [
+            'article_id' => [
+                'label' => 'Article',
+                'rules' => 'required|is_natural_no_zero',
+            ],
+            'featured' => [
+                'label' => 'Featured',
+                'rules' => 'permit_empty|in_list[0,1]',
+            ],
             'userfile' => [
                 'label' => 'Image File',
                 'rules' => [
@@ -91,10 +103,25 @@ class Photo extends BaseController
                 ],
             ],
         ];
-        if (! $this->validateData([], $validationRule)) {
-            $data = ['errors' => $this->validator->getErrors()];
+        if (! $this->validateData($this->request->getPost(), $validationRule)) {
+            $data = [
+                'errors' => $this->validator->getErrors(),
+                'articles' => $this->article->findAll(),
+            ];
             return view('upload_form', $data);
         }
+
+        $articleId = $this->request->getPost('article_id');
+        $article = $this->article->find($articleId);
+        if (! $article) {
+            return view('upload_form', [
+                'errors' => ['Vybraný článek neexistuje.'],
+                'articles' => $this->article->findAll(),
+            ]);
+        }
+
+        $featured = $this->request->getPost('featured') ? 1 : 0;
+
         $img = $this->request->getFile('userfile');
         if (! $img->hasMoved()) {
             $newName = $img->getRandomName();
@@ -103,7 +130,7 @@ class Photo extends BaseController
             $insert = [
                 'path' => $newName,
                 'featured' => 0,
-                'article_id' => null,
+                'article_id' => $articleId,
             ];
             $this->photo->insert($insert);
             $data = ['uploaded_fileinfo' => new File($filepath)];
