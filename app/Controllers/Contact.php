@@ -23,4 +23,43 @@ class Contact extends BaseController
         ];
         return view('contact', $data);
     }
+
+    public function create()
+    {
+        return view('contact/create');
+    }
+
+    public function store()
+    {
+        $this->contact->save([
+            'name' => $this->request->getPost('name'),
+            'address' => $this->request->getPost('address'),
+        ]);
+        return redirect()->to('/contact');
+    }
+
+    public function edit($id)
+    {
+        $contact = $this->contact->find($id);
+        if (!$contact) {
+            throw new \CodeIgniter\Exceptions\PageNotFoundException('Contact not found');
+        }
+        $data = [
+            'contact' => $contact,
+        ];
+        return view('contact/edit', $data);
+    }
+
+    public function update($id)
+    {
+        $contact = $this->contact->find($id);
+        if (!$contact) {
+            throw new \CodeIgniter\Exceptions\PageNotFoundException('Contact not found');
+        }
+        $this->contact->update($id, [
+            'name' => $this->request->getPost('name'),
+            'address' => $this->request->getPost('address'),
+        ]);
+        return redirect()->to('/contact');
+    }
 }

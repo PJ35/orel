@@ -28,6 +28,10 @@ $routes->group('', ['filter' => 'admin'], function ($routes) {
 	$routes->post('section/store', 'Section::store');
 	$routes->get('section/edit/(:num)', 'Section::edit/$1');
 	$routes->post('section/update/(:num)', 'Section::update/$1');
+	$routes->get('contact/create', 'Contact::create');
+	$routes->post('contact/store', 'Contact::store');
+	$routes->get('contact/edit/(:num)', 'Contact::edit/$1');
+	$routes->post('contact/update/(:num)', 'Contact::update/$1');
 });
 $routes->group('auth', ['namespace' => 'App\Controllers'], function ($routes) {
 	$routes->add('login', 'Auth::login');

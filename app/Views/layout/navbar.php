@@ -36,6 +36,11 @@
                 <li class="nav-item">
                     <a class="nav-link" href="<?= base_url('contact') ?>">Kontakt</a>
                 </li>
+                <?php if (session()->has('identity') && service('ion_auth')->isAdmin()): ?>
+                    <li class="nav-item">
+                        <a class="nav-link" href="<?= base_url('contact/create') ?>">Vytvořit kontakt</a>
+                    </li>
+                <?php endif; ?>
             </ul>
             <ul class="navbar-nav ms-auto">
                 <?php if (session()->has('identity')): ?>

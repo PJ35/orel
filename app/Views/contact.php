@@ -5,12 +5,22 @@
 <h1>Kontaktujte nás</h1>
 <?php if (! empty($contacts) && is_array($contacts)): ?>
     <ul class="list-group">
-        <?php foreach ($contacts as $contact): ?>
-            <li class="list-group-item">
-                <h5><?= $contact->name ?></h5>
-                <p>Adresa: <?= $contact->address ?></p>
-            </li>
-        <?php endforeach; ?>
+        <?php if (session()->has('identity') && service('ion_auth')->isAdmin()): ?>
+            <?php foreach ($contacts as $contact): ?>
+                <li class="list-group-item">
+                    <h5><?= $contact->name ?></h5>
+                    <p>Adresa: <?= $contact->address ?></p>
+                    <a href="<?= base_url('contact/edit/' . $contact->id) ?>" class="btn btn-sm btn-primary">Upravit</a>
+                </li>
+            <?php endforeach; ?>
+        <?php else: ?>
+            <?php foreach ($contacts as $contact): ?>
+                <li class="list-group-item">
+                    <h5><?= $contact->name ?></h5>
+                    <p>Adresa: <?= $contact->address ?></p>
+                </li>
+            <?php endforeach; ?>
+        <?php endif; ?>
     </ul>
 <?php endif; ?>
 <div id="map" style="height: 400px;"></div>
