@@ -22,7 +22,7 @@ class Section extends BaseController
     public function index()
     {
         $data = [
-            'sections' => $this->section->findAll(),
+            'sections' => $this->section->select('section.*, users.email')->join('users', 'users.id = section.user_id', 'left')->findAll(),
         ];
         return view('sections', $data);
     }
@@ -30,7 +30,7 @@ class Section extends BaseController
     public function show($id)
     {
         $data = [
-            'section' => $this->section->find($id),
+            'section' => $this->section->select('section.*, users.email')->join('users', 'users.id = section.user_id', 'left')->find($id),
         ];
         if (!$data['section']) {
             throw new \CodeIgniter\Exceptions\PageNotFoundException('Section not found');
@@ -44,7 +44,11 @@ class Section extends BaseController
             return redirect()->to('/auth/login')->with('error', 'Přístup odepřen');
         }
         
-        return view('section/create');
+        $data = [
+            'users' => $this->ionAuth->users()->result(),
+        ];
+
+        return view('section/create', $data);
     }
 
     public function store()
@@ -52,11 +56,26 @@ class Section extends BaseController
         if (!$this->ionAuth->loggedIn() || !$this->ionAuth->isAdmin()) {
             return redirect()->to('/auth/login')->with('error', 'Přístup odepřen');
         }
+
+        $validation = \Config\Services::validation();
+        $validation->setRule('user_id', 'Vedoucí', 'required|is_natural_no_zero|is_not_unique[users.id]');
+
+        if (! $validation->withRequest($this->request)->run()) {
+            $data = [
+                'users' => $this->ionAuth->users()->result(),
+                'validation' => $validation,
+                'name' => $this->request->getPost('name'),
+                'description' => $this->request->getPost('description'),
+                'selectedUserId' => $this->request->getPost('user_id'),
+            ];
+
+            return view('section/create', $data);
+        }
         
         $data = [
             'name' => $this->request->getPost('name'),
             'description' => $this->request->getPost('description'),
-            'user_id' => $this->ionAuth->user()->row()->id,
+            'user_id' => $this->request->getPost('user_id'),
         ];
         $this->section->insert($data);
         return redirect()->to('sections')->with('success', 'Oddíl byl úspěšně vytvořen.');
@@ -70,6 +89,7 @@ class Section extends BaseController
         
         $data = [
             'section' => $this->section->find($id),
+            'users' => $this->ionAuth->users()->result(),
         ];
         if (!$data['section']) {
             throw new \CodeIgniter\Exceptions\PageNotFoundException('Oddíl nenalezen');
@@ -82,10 +102,31 @@ class Section extends BaseController
         if (!$this->ionAuth->loggedIn() || !$this->ionAuth->isAdmin()) {
             return redirect()->to('/auth/login')->with('error', 'Přístup odepřen');
         }
+
+        $validation = \Config\Services::validation();
+        $validation->setRule('user_id', 'Vedoucí', 'required|is_natural_no_zero|is_not_unique[users.id]');
+
+        if (! $validation->withRequest($this->request)->run()) {
+            $data = [
+                'section' => $this->section->find($id),
+                'users' => $this->ionAuth->users()->result(),
+                'validation' => $validation,
+                'name' => $this->request->getPost('name'),
+                'description' => $this->request->getPost('description'),
+                'selectedUserId' => $this->request->getPost('user_id'),
+            ];
+
+            if (!$data['section']) {
+                throw new \CodeIgniter\Exceptions\PageNotFoundException('Oddíl nenalezen');
+            }
+
+            return view('section/edit', $data);
+        }
         
         $data = [
             'name' => $this->request->getPost('name'),
             'description' => $this->request->getPost('description'),
+            'user_id' => $this->request->getPost('user_id'),
         ];
         $this->section->update($id, $data);
         return redirect()->to('sections')->with('success', 'Oddíl byl úspěšně aktualizován.');

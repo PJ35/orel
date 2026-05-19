@@ -50,7 +50,7 @@ class Article extends BaseController
 
     public function create()
     {
-        if (!$this->ionAuth->loggedIn() || !$this->ionAuth->isAdmin()) {
+        if (!$this->ionAuth->loggedIn()) {
             return redirect()->to('/auth/login')->with('error', 'Přístup odepřen');
         }
         return view('article/create');
@@ -58,7 +58,7 @@ class Article extends BaseController
 
     public function store()
     {
-        if (!$this->ionAuth->loggedIn() || !$this->ionAuth->isAdmin()) {
+        if (!$this->ionAuth->loggedIn()) {
             return redirect()->to('/auth/login')->with('error', 'Přístup odepřen');
         }
         

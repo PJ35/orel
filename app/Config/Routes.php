@@ -15,13 +15,13 @@ $routes->get('photos/(:num)', 'Photo::article/$1');
 $routes->get('photo/(:num)', 'Photo::show/$1');
 $routes->get('articles', 'Article::index');
 $routes->get('article/(:num)', 'Article::show/$1');
+$routes->get('article/create', 'Article::create');
+$routes->post('article/store', 'Article::store');
 $routes->get('sections', 'Section::index');
 $routes->get('section/(:num)', 'Section::show/$1');
 $routes->group('', ['filter' => 'admin'], function ($routes) {
 	$routes->get('photo/upload', 'Photo::upload');
 	$routes->post('photo/store', 'Photo::store');
-	$routes->get('article/create', 'Article::create');
-	$routes->post('article/store', 'Article::store');
 	$routes->get('article/edit/(:num)', 'Article::edit/$1');
 	$routes->post('article/update/(:num)', 'Article::update/$1');
 	$routes->get('section/create', 'Section::create');

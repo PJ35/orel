@@ -20,7 +20,7 @@
                 <li class="nav-item">
                     <a class="nav-link" href="<?= base_url('articles') ?>">Články</a>
                 </li>
-                <?php if (session()->has('identity') && service('ion_auth')->isAdmin()): ?>
+                <?php if (session()->has('identity')): ?>
                     <li class="nav-item">
                         <a class="nav-link" href="<?= base_url('article/create') ?>">Vytvořit článek</a>
                     </li>
